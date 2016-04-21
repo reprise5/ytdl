@@ -2,7 +2,7 @@
 
 #AUTHOR: Reprise
 
-#This script grabs a stream off youtube, then converts it to mp3.
+#This script grabs a stream off youtube then converts it to mp3 using youtube-dl and avconv programs.
 #it assumes you have no other .m4a files in the dir.
 #Version: 1.02
 
@@ -26,7 +26,7 @@ conv_stream() {
       fi
 }
 
-cd  /home/reprise/Dropbox/1\ Audio/1\ Transfer/ 
+cd  ~/Music
 echo -e "Enter URL --> \c"
 read URL
 
@@ -35,7 +35,7 @@ unconverted=$(ls | grep *.m4a)
 wd=$(pwd)
 
 if [ "$unconverted" = "" ]; then
-      #Download Failed because youtube-dl threw an error.  So don't bother converting.
+      #file doesn't exist because youtube-dl didn't make one. So don't bother converting it.
       tput setaf 1; echo -e "[ERROR] \c"
       tput sgr0   ; echo -e "get_stream() returned null.  Download failed. \nexiting early.\n"
       exit 0
@@ -52,7 +52,7 @@ outfile=$(echo $outfile.mp3)
 infile=$(echo $unconverted | cut -f1 -d' ')
 
 if [ "$unconverted" = "" ]; then
-      #if unconverted isn't there:
+      #if unconverted string is blank, it isn't there.
       tput setaf 1; echo -e "[ERROR] \c"
       tput sgr0   ; echo -e "The raw stream went missing or doesn't exist in '$wd' and couldn't be converted.\n"
 else
