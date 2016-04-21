@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#AUTHOR: Danielle Marcoullier "Reprise"
+#AUTHOR: Reprise
 
 #This script grabs a stream off youtube, then converts it to mp3.
 #it assumes you have no other .m4a files in the dir.
@@ -61,9 +61,3 @@ else
       tput setaf 2; echo -e "[ OK ] \c"
       tput sgr0   ; echo -e "Download complete.\n       Output: $wd/$outfile"
 fi
-
-
-#https://www.youtube.com/watch?v=vIi57zhDl78
-#https://www.youtube.com/watch?v=JtH68PJIQLE&nohtml5=False
-#https://www.youtube.com/watch?v=G_vqAsJ0Bjc&nohtml5=False
-
