@@ -2,10 +2,14 @@
 
 all this script does is use youtube-dl and avconv to download and convert a youtube video to an mp3.  It automatically stores in ~/Music by default. 
 
-It assumes that there are no other *.m4a files in the working directory (~/Music by default).  Having other files might have unintended effects.
-
+It assumes that there are no other *.m4a files in the working directory (~/Music by default).  Having other *.m4a files might have unintended effects. (such as the wrong file being converted. so the original unconverted file will get deleted at the end without being converted.)
 
 ##Installation
+
+######youtube-dl and avconv
+since this script uses [youtube-dl](https://github.com/rg3/youtube-dl) and avconv programs developed by other people, you will need to download and install them before using this script. to download avconv, you can get it from the default apt repositories, so a simple `sudo apt-get install libav-tools` is all you need.
+
+###### ytdl.sh
 
 first open a terminal, and download the files to your desktop:
 ```
