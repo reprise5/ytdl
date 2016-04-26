@@ -4,7 +4,7 @@
 
 #This script grabs a stream off youtube then converts it to mp3 using youtube-dl and avconv programs.
 #it assumes you have no other .m4a files in the dir.
-#Version: 1.02
+#Version: 1.03
 
 #------------------------------------------------------------------------------
 get_stream() {
@@ -26,16 +26,21 @@ conv_stream() {
       fi
 }
 
-cd  ~/Music
-echo -e "Enter URL --> \c"
-read URL
-
-get_stream $URL
-unconverted=$(ls | grep *.m4a)
+URL=$1
 wd=$(pwd)
+cd ~/Music
+
+if [[ -n $URL ]]; then
+      get_stream $URL
+      unconverted=$(ls | grep *.m4a)
+else
+      echo -e "Please enter a valid URL."
+      exit 0
+fi
+
 
 if [ "$unconverted" = "" ]; then
-      #file doesn't exist because youtube-dl didn't make one. So don't bother converting it.
+      #Download Failed because youtube-dl threw an error.  So don't bother converting.
       tput setaf 1; echo -e "[ERROR] \c"
       tput sgr0   ; echo -e "get_stream() returned null.  Download failed. \nexiting early.\n"
       exit 0
@@ -52,7 +57,7 @@ outfile=$(echo $outfile.mp3)
 infile=$(echo $unconverted | cut -f1 -d' ')
 
 if [ "$unconverted" = "" ]; then
-      #if unconverted string is blank, it isn't there.
+      #if unconverted isn't there:
       tput setaf 1; echo -e "[ERROR] \c"
       tput sgr0   ; echo -e "The raw stream went missing or doesn't exist in '$wd' and couldn't be converted.\n"
 else
@@ -61,3 +66,4 @@ else
       tput setaf 2; echo -e "[ OK ] \c"
       tput sgr0   ; echo -e "Download complete.\n       Output: $wd/$outfile"
 fi
+
