@@ -28,7 +28,16 @@ conv_stream() {
 
 URL=$1
 wd=$(pwd)
+
+#Check if ~/Music/ytdl-downloads exists.  It's the working directory.
 cd ~/Music
+if [ -d ~/Music/ytdl-downloads ]; then
+      cd ytdl-downloads   
+else
+      echo "creating '~/Music/ytdl-downloads...'"
+      mkdir ytdl-downloads
+      cd ytdl-downloads
+fi
 
 if [[ -n $URL ]]; then
       get_stream $URL
