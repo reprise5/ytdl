@@ -1,6 +1,6 @@
 # ytdl
 
-all this script does is use youtube-dl and avconv to download and convert a youtube video to an mp3.  It automatically stores in `~/Music/ytdl-downloads` by default.
+All this script does is use youtube-dl and avconv to download and convert a youtube video to an mp3.  It automatically stores in `~/Music/ytdl-downloads` by default.
 
 ytdl assumes that there are no other *.m4a files in the working directory. Having other *.m4a files might have unintended effects, so that's why there's a seperate folder for this script.
 
@@ -9,7 +9,7 @@ ytdl assumes that there are no other *.m4a files in the working directory. Havin
 ######youtube-dl and avconv
 Since this script uses youtube-dl and avconv programs developed by other people, you will need to download and install them before using this script. 
 
-To download [avconv](https://libav.org/), you can get it from the default apt repositories, so a simple `sudo apt-get install libav-tools` is all you need. 
+To download [avconv](https://libav.org/), you can get it from the default apt repositories: `sudo apt-get install libav-tools` 
 To Download [youtube-dl](https://github.com/rg3/youtube-dl), you can download it with python-pip: `sudo pip install --upgrade youtube_dl`
 
 ###### ytdl.sh
@@ -41,8 +41,8 @@ Assuming you didn't follow the installation steps for ytdl above:
 ```
 cd ~/Desktop
 git clone https://github.com/reprise5/ytdl
-cd ~/Desktop/ytdl
+cd ytdl
 chmod 775 ytdl.sh
 ```
 And then run the script:
-`./ytdl.sh 'ytdl 'https://www.youtube.com/ASDFGHJKL'`
+`./ytdl.sh 'https://www.youtube.com/ASDFGHJKL'`
