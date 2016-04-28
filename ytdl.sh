@@ -6,7 +6,7 @@
 #it assumes you have no other .m4a files in the dir.
 #Version: 1.03
 
-#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------
 get_stream() {
       if [ -f /usr/bin/youtube-dl ]; then 
             youtube-dl --extract-audio -f 140 $URL  -o '%(title)s.%(ext)s' --restrict-filenames 
@@ -18,7 +18,7 @@ get_stream() {
 
 conv_stream() {
       if [ -f /usr/bin/avconv ]; then 
-            tput setaf 3; echo -e "converting to MP3...\n"
+            tput setaf 3; echo -e "converting to MP3\n"
             avconv -i $infile $outfile
       else
             echo "please install avconv to convert this stream."
@@ -27,16 +27,17 @@ conv_stream() {
 }
 
 URL=$1
-wd=$(pwd)
 
 #Check if ~/Music/ytdl-downloads exists.  It's the working directory.
 cd ~/Music
 if [ -d ~/Music/ytdl-downloads ]; then
-      cd ytdl-downloads   
+      cd ytdl-downloads 
+      wd=$(pwd)
 else
-      echo "creating '~/Music/ytdl-downloads...'"
+      echo "creating '~/Music/ytdl-downloads'"
       mkdir ytdl-downloads
       cd ytdl-downloads
+      wd=$(pwd)
 fi
 
 if [[ -n $URL ]]; then
