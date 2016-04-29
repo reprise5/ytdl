@@ -1,0 +1,24 @@
+
+****************************************************************************************
+*USAGE:  [OPTIONS] [URL]                                                               *
+*This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
+*Take that file and convert it to an mp3 using avconv.  it will delete the             *
+*file after it has been converted.  To update this script simply clone it from github: *
+*git clone https://github.com/reprise5/ytdl/                                           *
+*                                                                                      *
+*For information about the programs used in this script see these links:               *
+*AVCONV:     https://libav.org/                                                        *
+*YOUTUBE-DL: https://github.com/rg3/youtube-dl                                         *
+****************************************************************************************
+
+      -u, --url [URL]
+      it willdownload and convert a YouTube stream and put it in a folder called 
+      /ytdl-downloads.  a URL is required.  or
+
+      -h , --help
+      Display this help menu
+
+      -k, --keep-original [URL]
+      This will keep both the originally downloaded *.m4a file and the converted *.mp3.
+      It will also make a new folder: .../ytdl-downloads/originals.  if it's not there yet.
+      Do not move *.m4a files to the ytdl-downloads folder.  I said so.
