@@ -1,11 +1,16 @@
 #!/bin/bash
 
 #AUTHOR: Reprise
+#DATE: 4.28.2016
 
-#This script grabs a stream off youtube then converts it to mp3 using youtube-dl and avconv programs.
+#PURPOSE:
+#This script grabs a stream off youtube, then converts it to mp3.
 #it assumes you have no other .m4a files in the dir.
-#Version: 1.03
-#------------------------------------------------------------------------------
+#Syntax: ytdl [OPTIONS] [URL]  *an option is required.
+
+#Version: 1.10
+#===================================================================================
+
 get_stream() {
       #check Youtube-dl's existence
       if [ -f /usr/bin/youtube-dl ]; then 
@@ -46,15 +51,21 @@ conv_stream() {
 }
 
 display_help() {
-      echo -e "USAGE:"
+            cat ~/Music/ytdl-downloads/ytdl-help.txt
 }
 
 opt=$1
 URL=$2
-#Check if ~/Music/ytdl-downloads exists.  It's the working directory.
 
-cd ~/Desktop
-if [ -d ~/Desktop/ytdl-downloads ]; then
+#Are you root?
+if [ "$EUID" -eq 0 ]
+  then echo "Please don't run this as root."
+  exit
+fi
+
+#Check if ~/Music/ytdl-downloads exists.  It's the working directory.
+cd ~/Music
+if [ -d ~/Music/ytdl-downloads ]; then
       cd ytdl-downloads 
       wd=$(pwd)  
 else
@@ -63,14 +74,13 @@ else
       cd ytdl-downloads
       wd=$(pwd)
 fi
-#===
+
 case "$opt" in
       -u|--url)
             if [[ -n $URL ]]; then
                   get_stream "$URL"
             else
                   echo -e "Please enter a valid URL."
-                  display_help
                   exit 0
             fi
 
