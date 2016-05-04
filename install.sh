@@ -7,16 +7,10 @@
 #This script moves the files to ytdl to the correct locatons, and changes the 
 #permissions of the files in ~/Music so that users other than root can access them.
 #the script requires root because root permissions are needed to write to /bin.
-#This script installs ytdl v1.10.
+#This script installs ytdl v1.10+
 
 #Version 1.00
 #===================================================================================
-
-FILE="/tmp/out.$$"
-GREP="/bin/grep"
-wd=$(pwd)
-
-
 
 # Are we root?
 if [[ $EUID -ne 0 ]]; then
