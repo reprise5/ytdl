@@ -17,13 +17,14 @@
   ****************************************************************************************
 
       -u, --url [URL]
-      it willdownload and convert a YouTube stream and put it in a folder called 
-      /ytdl-downloads.  a URL is required.  or
+      will download and convert a YouTube stream normally and put it in a folder at
+      ~/Music/ytdl-downloads by default.  a URL is required in single quotes.
+      ytdl -u 'https://youtube.com/aSdFGhjKl'
 
       -h , --help
       Display this help menu
 
       -k, --keep-original [URL]
       This will keep both the originally downloaded *.m4a file and the converted *.mp3.
-      It will also make a new folder: .../ytdl-downloads/originals if it's not there yet.
-      Do not move *.m4a files to the ytdl-downloads folder.  I said so.
+      It will also make a new folder: ~/Music/ytdl-downloads/originals if it's not there yet.
+      Do NOT move *.m4a files to the ytdl-downloads folder.
