@@ -12,10 +12,6 @@
 #Version 1.01
 #===================================================================================
 
-FILE="/tmp/out.$$"
-GREP="/bin/grep"
-wd=$(pwd)
-
 # Are we root?
 if [[ $EUID -ne 0 ]]; then
       echo "This script must be run as root" 1>&2
@@ -41,12 +37,12 @@ else
       echo "Changing permissions for '$me/ytdl-downloads/ytdl-help.txt'"
       chmod a+rwx $me/Music/ytdl-downloads/ytdl-help.txt
 
-      echo "moving ytdl to /bin"
+      echo "moving ytdl to /usr/bin"
       mv ytdl.sh ytdl
-      cp ytdl /bin
+      cp ytdl /usr/bin
       
       echo "changing permissions of 'ytdl.sh'"
-      chmod a+rwx /bin/ytdl      
+      chmod a+rwx /usr/bin/ytdl      
       mv ytdl ytdl.sh
 
       #ending message:
