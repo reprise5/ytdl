@@ -7,7 +7,7 @@
   ****************************************************************************************
   *USAGE:  [OPTIONS] [URL]                                                               *
   *This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
-  *Take that file and convert it to an mp3 using avconv.  it will delete the             *
+  *Take that file and convert it to an mp3 using avconv.  it will delete the original    *
   *file after it has been converted.  To update this script simply clone it from github: *
   *git clone https://github.com/reprise5/ytdl/                                           *
   *                                                                                      *
