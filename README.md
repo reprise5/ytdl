@@ -44,9 +44,9 @@ cd ytdl
 chmod 775 ytdl.sh
 mv ytdl.sh ytdl
 ```
-Then put a copy of the ytdl file to /bin.
+Then put a copy of the ytdl file to /usr/bin.
 ```
-cp ytdl /bin
+cp ytdl /usr/bin
 ```
 In ~/Music, create a folder called ytdl-downloads, and put ytdl-help.txt inside.  It's not required, and ytdl will make one for you if you don't.  But this is where ytdl-help.txt needs to be in order for you to run `--help`.  Make sure you're not root anymore by pressing ctrl+d or by typing `exit`.
 ```
