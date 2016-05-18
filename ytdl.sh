@@ -43,6 +43,7 @@ get_stream() {
 conv_stream() {
       if [ -f /usr/bin/avconv ]; then 
             tput setaf 3; echo -e "converting to MP3...\n"
+            tput sgr0   ; 
             avconv -i $infile $outfile
       else
             echo "please install avconv to convert this stream."
