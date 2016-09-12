@@ -25,7 +25,7 @@ get_stream() {
       if [ "$unconverted" = "" ]; then
             #Download Failed from youtube-dl.
             tput setaf 1; echo -e "[ERROR] \c"
-            tput sgr0   ; echo -e "get_stream() returned null.  Download failed. \nexiting early.\n"
+            tput sgr0   ; echo -e "Download failed from ytdl. \nAborting...\n"
             exit 0
       else
             #Youtube-dl successfully grabbed the stream.
