@@ -6,11 +6,15 @@
 #PURPOSE:
 #This script moves the files of ytdl to the correct locatons, and changes the 
 #permissions of the files in ~/Music so that users other than root can access them.
-#root permissions are needed to write to /bin.
-#This script installs ytdl v1.10.
+#root permissions are needed to write to /usr/bin.
+#This script installs ytdl v1.10+.
 
 #Version 1.01
 #===================================================================================
+
+FILE="/tmp/out.$$"
+GREP="/bin/grep"
+wd=$(pwd)
 
 # Are we root?
 if [[ $EUID -ne 0 ]]; then
@@ -24,7 +28,7 @@ else
       echo "Installing to user: '$me'"
       me=$(echo /home/$me)
 
-      #Ok, here's the magic.
+      #Ok, move files and set correct permissions.
       echo "creating $me/Music/ytdl-downloads"
       mkdir $me/Music/ytdl-downloads
 
@@ -43,9 +47,11 @@ else
       
       echo "changing permissions of 'ytdl.sh'"
       chmod a+rwx /usr/bin/ytdl      
+
       mv ytdl ytdl.sh
 
       #ending message:
       tput setaf 2; echo -e "[ OK ] \c"
       tput sgr0   ; echo -e "Done!  Enjoy ytdl!"
 fi
+
