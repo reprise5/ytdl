@@ -18,7 +18,7 @@ NOTE: Installing ytdl.sh isn't required, it's only for convenience.  If you want
 ###### install.sh
 I've written an installer for ytdl.  All you need to do is open a terminal and follow these steps:
 
-First log in as root by `typing su`, `sudo su`, or `sudo -i`.
+First log in as root by typing 'su`, `sudo su`, or `sudo -i`.
 go to your Desktop, clone this git repository, and move to that directory.
 ```
 cd ~/Desktop
