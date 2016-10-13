@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #AUTHOR: Reprise
-#DATE: 9.29.2016
+#DATE: 4.28.2016
 
 #PURPOSE:
 #This script moves the files of ytdl to the correct locatons, and changes the 
@@ -11,6 +11,10 @@
 
 #Version 1.01
 #===================================================================================
+
+FILE="/tmp/out.$$"
+GREP="/bin/grep"
+wd=$(pwd)
 
 # Are we root?
 if [[ $EUID -ne 0 ]]; then

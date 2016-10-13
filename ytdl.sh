@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #AUTHOR: Reprise
-#DATE: 9.29.2016
+#DATE: 4.28.2016
 
 #PURPOSE:
 #This script grabs a stream off youtube, then converts it to mp3.
@@ -10,32 +10,25 @@
 
 #Version: 1.11
 #===================================================================================
-opt=$1
-URL=$2
-ME=$(echo ~/)
-VERSION="1.11"
-
 display_help() {
     cat << EOF
 Usage: $0 [OPTION]['URL']
 
-  ****************************************************************************************
-  *This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
-  *Take that file and convert it to an mp3 using avconv.  it will delete the             *
-  *file after it has been converted.  To update this script simply clone it from github: *
-  *git clone https://github.com/reprise5/ytdl/                                           *
-  *                                                                                      *
-  *For information about the programs used in this script see these links:               *
-  *AVCONV:     https://libav.org/                                                        *
-  *YOUTUBE-DL: https://github.com/rg3/youtube-dl                                         *
-  ****************************************************************************************
+****************************************************************************************
+*This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
+*Take that file and convert it to an mp3 using avconv.  it will delete the             *
+*file after it has been converted.  To update this script simply clone it from github: *
+*git clone https://github.com/reprise5/ytdl/                                           *
+*                                                                                      *
+*For information about the programs used in this script see these links:               *
+*AVCONV:     https://libav.org/                                                        *
+*YOUTUBE-DL: https://github.com/rg3/youtube-dl                                         *
+****************************************************************************************
 
 OPTIONS:
-      --version         Displays which version of ytdl this is.
       -u, --url [URL]   will download and convert a YouTube stream normally.
-                        The output goes to $ME Music/ytdl-downloads.
+                        The output goes to ${ME}Music/ytdl-downloads.
       -h , --help       Display this help menu.
-      
 EOF
 }
 
@@ -108,6 +101,10 @@ conv_stream() {
       fi  
 }
 
+opt=$1
+URL=$2
+ME=$(echo ~/)
+
 #Are you root?
 if [ "$EUID" -eq 0 ]
   then echo "Please don't run this as root."
@@ -147,11 +144,9 @@ case "$opt" in
                   tput sgr0   ; echo -e "Download complete.\n       Output: $wd/$outfile"
             fi
             ;;
-
-      --version)
-            echo "Version: " $VERSION
+      -r|--rename)
+            #Multiple Streams 
             ;;
-
       *|-h|--help)
             display_help
             ;;
