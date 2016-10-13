@@ -8,27 +8,34 @@
 #it assumes you have no other .m4a files in the dir.
 #Syntax: ytdl [OPTIONS] [URL]  *an option is required. Arguement isn't.
 
-#Version: 1.11
+#Version: 1.12
 #===================================================================================
+opt=$1
+URL=$2
+ME=$(echo ~/)
+VERSION="1.12"
+
 display_help() {
     cat << EOF
 Usage: $0 [OPTION]['URL']
 
-****************************************************************************************
-*This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
-*Take that file and convert it to an mp3 using avconv.  it will delete the             *
-*file after it has been converted.  To update this script simply clone it from github: *
-*git clone https://github.com/reprise5/ytdl/                                           *
-*                                                                                      *
-*For information about the programs used in this script see these links:               *
-*AVCONV:     https://libav.org/                                                        *
-*YOUTUBE-DL: https://github.com/rg3/youtube-dl                                         *
-****************************************************************************************
+  ****************************************************************************************
+  *This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
+  *Take that file and convert it to an mp3 using avconv.  it will delete the             *
+  *file after it has been converted.  To update this script simply clone it from github: *
+  *git clone https://github.com/reprise5/ytdl/                                           *
+  *                                                                                      *
+  *For information about the programs used in this script see these links:               *
+  *AVCONV:     https://libav.org/                                                        *
+  *YOUTUBE-DL: https://github.com/rg3/youtube-dl                                         *
+  ****************************************************************************************
 
 OPTIONS:
+      --version         Displays which version of ytdl this is.
       -u, --url [URL]   will download and convert a YouTube stream normally.
                         The output goes to ${ME}Music/ytdl-downloads.
       -h , --help       Display this help menu.
+      
 EOF
 }
 
@@ -101,10 +108,6 @@ conv_stream() {
       fi  
 }
 
-opt=$1
-URL=$2
-ME=$(echo ~/)
-
 #Are you root?
 if [ "$EUID" -eq 0 ]
   then echo "Please don't run this as root."
@@ -145,7 +148,10 @@ case "$opt" in
             fi
             ;;
       -r|--rename)
-            #Multiple Streams 
+            #Multiple Streams ??
+            ;;
+      --version)
+            echo "Version: " $VERSION
             ;;
       *|-h|--help)
             display_help
