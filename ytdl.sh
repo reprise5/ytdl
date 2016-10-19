@@ -39,35 +39,6 @@ OPTIONS:
 EOF
 }
 
-get_multi_stream() {
-      #check Youtube-dl's existence
-      if [ -f /usr/bin/youtube-dl ]; then 
-            youtube-dl --extract-audio -f 140 $URL  -o '%(title)s.%(ext)s' --restrict-filenames 
-      else
-            echo "please install youtube-dl to grab this stream."
-            exit 0
-      fi
-      
-      #Prepare the standard input.
-      unconverted=$(ls | grep *.m4a)
-      if [ "$unconverted" = "" ]; then
-            #Download Failed from youtube-dl.
-            tput setaf 1; echo -e "[ERROR] \c"
-            tput sgr0   ; echo -e "get_stream() returned null.  Download failed. \nexiting early.\n"
-            exit 0
-      else
-            #Youtube-dl successfully grabbed the stream.
-            echo -e "\nOutput: '$wd/$unconverted'"
-      fi
-
-      #chop off the .m4a extension so we can append ".mp3" for use of an output name.
-      #then add underscores to the in and outfile for avconv's standard input requirement.
-      filename1=$(echo $unconverted | rev | cut -f 2- -d '.' | rev)
-      outfile=$(echo ${filename1// /_})
-      outfile=$(echo $outfile.mp3)
-      infile=$(echo $unconverted | cut -f1 -d' ')
-}
-
 get_stream() {
       #check Youtube-dl's existence
       if [ -f /usr/bin/youtube-dl ]; then 
