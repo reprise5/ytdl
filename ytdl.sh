@@ -1,23 +1,30 @@
 #!/bin/bash
 
 #AUTHOR: Reprise
-#DATE: 4.28.2016
+#DATE: 10.20.2016
 
 #PURPOSE:
 #This script grabs a stream off youtube, then converts it to mp3.
 #it assumes you have no other .m4a files in the dir.
 #Syntax: ytdl [OPTIONS] [URL]  *an option is required. Arguement isn't.
 
-#Version: 1.12
+#Version: 1.20
 #===================================================================================
-opt=$1
-URL=$2
-ME=$(echo ~/)
-VERSION="1.12"
+VERSION="1.20"    #Variable holds the version.  when updating, change it here.
+opt=$1            #first option, which should be -u, -v, or -h.
+URL=$2            #arguement to go with option1, namely -u.
+opt2=$3           #option 2, reserved only for -t at this time.
+ME=$(echo ~/)     #home directory   
+ANS=""            #Is used for y/n answers for questions.
+infile=""         #filename with underscores for avconv's standard input requirement
+outfile=""        #as above, but the output name while callling avconv
+TITLE=""          #for writing ID3 tags.  user inputs, taken in with read statements.
+ARTIST=""         #for writing ID3 tags.  user inputs, taken in with read statements.       
 
 display_help() {
     cat << EOF
-Usage: $0 [OPTION]['URL']
+Usage: $0 OPTION ['URL'][-t] or
+          -t [FILENAME]
 
   ****************************************************************************************
   *This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
@@ -34,8 +41,11 @@ OPTIONS:
       --version         Displays which version of ytdl this is.
       -u, --url [URL]   will download and convert a YouTube stream normally.
                         The output goes to ${ME}Music/ytdl-downloads.
+      -t, --mktag       Gives you the option to write title and artist ID3 Tags.  will also rename
+                        the filename with the information you give.  do not give null values.
+                        SYNTAX: ytdl -u 'URL' -t            -t must come after -u 'URL'.
       -h , --help       Display this help menu.
-      
+       
 EOF
 }
 
@@ -45,7 +55,7 @@ get_stream() {
             youtube-dl --extract-audio -f 140 $URL  -o '%(title)s.%(ext)s' --no-playlist --restrict-filenames 
       else
             echo "please install youtube-dl to grab this stream."
-            exit 0
+            exit 1
       fi
       
       #Prepare the standard input.
@@ -53,8 +63,8 @@ get_stream() {
       if [ "$unconverted" = "" ]; then
             #Download Failed from youtube-dl.
             tput setaf 1; echo -e "[ERROR] \c"
-            tput sgr0   ; echo -e "get_stream() returned null.  Download failed. \nexiting early.\n"
-            exit 0
+            tput sgr0   ; echo -e "Download failed. \nexiting early.\n"
+            exit 1
       else
             #Youtube-dl successfully grabbed the stream.
             echo -e "\nOutput: '$wd/$unconverted'"
@@ -75,14 +85,47 @@ conv_stream() {
             avconv -i $infile $outfile
       else
             echo "please install avconv to convert this stream."
-            exit 0
+            exit 1
       fi  
 }
 
+make_ID3_tags() {
+
+      if [ -f /usr/bin/eyeD3 ]; then 
+            tput setaf 2; echo -e "Writing Basic ID3 Tags for SONG-TITLE and ARTIST." 
+            tput sgr0   ; echo -e "TITLE:\c"
+            read "TITLE"
+            echo -e "ARTIST:\c"
+            read  "ARTIST"
+                              
+            #Write the ID3 Tags out with eyeD3.
+            eyeD3 -t "$TITLE" -a "$ARTIST" $outfile
+            #implicit rename. Hard-coded extension appended to ARTIST.
+            ARTIST=$(echo ${ARTIST}.mp3) 
+            mv $outfile "$TITLE - $ARTIST"
+                              
+            #ask to install it. if yes, check for pip. if no, quit.
+      else
+            echo "please install eyeD3 to write ID3 tags."
+            echo -e "would you like to install it using pyton-pip?? [y/n]:\c"
+            read ANS
+
+            if [[ $ANS = "n" ]]; then
+                  echo "Did not install eyeD3.  Exiting..."
+                  exit 0
+            else
+                  if [ -f /usr/bin/pip ]; then
+                        pip install eyeD3
+                  else
+                        echo "Well, pip isn't there either. Exiting..."
+                 fi
+            fi       
+       fi
+}
 #Are you root?
 if [ "$EUID" -eq 0 ]
   then echo "Please don't run this as root."
-  exit
+  exit 0
 fi
 
 #Check if ~/Music/ytdl-downloads exists.  It's the working directory.
@@ -97,18 +140,30 @@ else
       wd=$(pwd)
 fi
 
+
+#Currently, if both options are to be read, must go -u then -t.  not -t then -u.
+#I don't know how to use getopts.  ;(
+
 case "$opt" in
-      #single stream.
       -u|--url)
-            if [[ -n $URL ]]; then
-                  get_stream "$URL"
+            #check $URL for formatting/existence.
+            if [[ $URL == *"&list="* ]]; then
+                  echo "this URL points to a playlist.  Please provide a URL to a single YouTube video."
+                  echo "This script cannot handle multi-file processing.  Exiting..."
+                  exit 0
+                  #maybe put the variable names in an array, and process them by element number, until length-1?
+                  #The future looks good.
+            
+
+            elif [[ -n $URL ]]; then
+                  get_stream "$URL"\c
             else
                   echo -e "Please enter a valid URL."
                   exit 0
             fi
 
-            if [ "$unconverted" = "" ]; then
-                  #if unconverted isn't there:
+            #look for unconverted and process if unconverted file is there.
+            if [[ "$unconverted" == "" ]]; then
                   tput setaf 1; echo -e "[ERROR] \c"
                   tput sgr0   ; echo -e "The raw stream went missing or doesn't exist in '$wd'.\n"
             else
@@ -117,13 +172,22 @@ case "$opt" in
                   tput setaf 2; echo -e "[ OK ] \c"
                   tput sgr0   ; echo -e "Download complete.\n       Output: $wd/$outfile"
             fi
-            ;;
-      -r|--rename)
-            #Multiple Streams ??
+
+            #so that -u and -t can be used at the same time.
+            case "$opt2" in 
+                  -t|--mktag)
+                        #if eyeD3 is installed, write tags.
+                        make_ID3_tags
+                        ;;
+            esac         
             ;;
       --version)
             echo "Version: " $VERSION
             ;;
+#      -t|--mktag)            
+#            outfile=$1
+#            make_ID3_tags
+#            ;;
       *|-h|--help)
             display_help
             ;;
