@@ -1,4 +1,9 @@
-# ytdl
+                            ____  ____  _________  ______   _____     
+                           |_  _||_  _||  _   _  ||_   _ `.|_   _|    
+                             \ \  / /  |_/ | | \_|  | | `. \ | |      
+                              \ \/ /       | |      | |  | | | |   _  
+                              _|  |_      _| |_    _| |_.' /_| |__/ | 
+                             |______|    |_____|  |______.'|________|                                       
 
 All this script does is use youtube-dl and avconv to download and convert a youtube video to an mp3.  It automatically stores in `~/Music/ytdl-downloads` by default.
 
