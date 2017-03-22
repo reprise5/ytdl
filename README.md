@@ -9,9 +9,9 @@ All this script does is use youtube-dl and avconv to download and convert a yout
 
 ytdl assumes that there are no other *.m4a files in the working directory. Having other *.m4a files might have unintended effects, so that's why there's a seperate folder for this script.
 
-##Installation
+## Installation
 
-####youtube-dl and avconv
+#### youtube-dl and avconv
 Since this script uses youtube-dl and avconv programs developed by other people, you will need to download and install them before using this script. 
 
 To download [avconv](https://libav.org/), you can get it from the default apt repositories: `sudo apt-get install libav-tools` 
@@ -54,7 +54,7 @@ Then put a copy of the ytdl file to /usr/bin.
 cp ytdl /usr/bin
 ```
 
-##Usage
+## Usage
 ###### 1:
 If you followed the previously mentioned steps for installing, simply run the script by typing `ytdl` and pass the URL as an arguement. For example: `ytdl -u 'https://www.youtube.com/ASDFGHJKL'`
 
