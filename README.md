@@ -1,9 +1,11 @@
-                            ____  ____  _________  ______   _____     
-                           |_  _||_  _||  _   _  ||_   _ `.|_   _|    
-                             \ \  / /  |_/ | | \_|  | | `. \ | |      
-                              \ \/ /       | |      | |  | | | |   _  
-                              _|  |_      _| |_    _| |_.' /_| |__/ | 
-                             |______|    |_____|  |______.'|________|                                       
+                                ____  ____  _________  ______   _____     
+                               |_  _||_  _||  _   _  ||_   _ `.|_   _|    
+                                 \ \  / /  |_/ | | \_|  | | `. \ | |      
+                                  \ \/ /       | |      | |  | | | |   _  
+                                  _|  |_      _| |_    _| |_.' /_| |__/ | 
+                                 |______|    |_____|  |______.'|________|                                       
+
+ [![GitHub release](https://img.shields.io/github/release/reprise5/ytdl.svg)](https://github.com/reprise5/ytdl/releases)
 
 All this script does is use youtube-dl and avconv to download and convert a youtube video to an mp3.  It automatically stores in `~/Music/ytdl-downloads` by default.
 
