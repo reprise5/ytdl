@@ -62,13 +62,13 @@ If you followed the previously mentioned steps for installing, simply run the sc
 
 ytdl has a few options:
 ```
-  ytdl [OPTIONS][URL]
-  
-  -h, --help          Displays help Dialogue
-  -u, --url           Will download and convert a YouTube stream as originally intended.
-  -k, --keep-original This will keep both the originally downloaded *.m4a file and the converted *.mp3.
-                      It will make a new folder: .../ytdl-downloads/originals.  if it's not there yet.
-                      [not programmed yet]
+      --version         Displays which version of ytdl this is.
+      -u, --url [URL]   will download and convert a YouTube stream normally.
+                        The output goes to ${ME}Music/ytdl-downloads.
+      -t, --mktag       Gives you the option to write title and artist ID3 Tags.  will also rename
+                        the filename with the information you give.  do not give null values.
+                        SYNTAX: ytdl -u 'URL' -t            -t must come after -u 'URL'.
+      -h , --help       Display this help menu.
 ```
 
 ###### 2:
@@ -81,6 +81,7 @@ cd ytdl
 chmod 775 ytdl.sh
 ```
 And then run the script:
-`./ytdl.sh -u 'https://www.youtube.com/ASDFGHJKL'`
+`./ytdl.sh -u 'https://www.youtube.com/ASDFGHJKL' -t
+`
 
-`--help` won't work if you do it like this, so just open ytdl-help.txt yourself if you need it.
+this will download a single youtube video stream, convert it to mp3, then ask you artist and title to rename and write ID3 tags.
