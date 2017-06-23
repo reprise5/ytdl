@@ -1,5 +1,11 @@
 #EXTM3U
 
+#EXTINF:#EXTINF:253,Radio - Le Cassette.mp3
+/home/reprise/Music/ytdl-downloads/Radio - Le Cassette.mp3
+#EXTINF:283,This Is All We Know.mp3
+/home/reprise/Music/ytdl-downloads/This Is All We Know.mp3
+#EXTINF:238,International Karate.mp3
+/home/reprise/Music/ytdl-downloads/International Karate.mp3
 #EXTINF:487,Like Ships Without Anchors.mp3
 /home/reprise/Music/ytdl-downloads/Like Ships Without Anchors.mp3
 #EXTINF:285,Snowdance - Vanilla.mp3
@@ -14,5 +20,7 @@
 /home/reprise/Music/ytdl-downloads/Carry me Ohio - Sun Kil Moon.mp3
 #EXTINF:238,Outrun.mp3
 /home/reprise/Music/ytdl-downloads/Outrun.mp3
+#EXTINF:300,Feel It.mp3
+/home/reprise/Music/ytdl-downloads/Feel It.mp3
 #EXTINF:451,Carry Me Ohio (Cover).mp3
 /home/reprise/Music/ytdl-downloads/Carry Me Ohio (Cover).mp3

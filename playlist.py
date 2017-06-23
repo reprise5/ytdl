@@ -2,7 +2,7 @@
 '''
 AUTHOR: Reprise
 DATE: 05.18.17
-Version: 1.0.0
+Version: 1.0.1
 
 PURPOSE:
 This program is meant to create .m3u entries to assist in the creation of playlists.
@@ -34,16 +34,19 @@ for track in os.listdir(PATH):
     # Write entry as it should appear in playlist
     playlist.write(FILE_MARKER + ":")
 
-    # Write RUNTIME
-    audio = MP3(path_track)
-    runtime = audio.info.length
-    playlist.write(str(runtime)[0:3])
-    playlist.write("," + track + "\n")
+    # DATA.m3u will be in this directory, we don't want to process it.
+    if track != "DATA.m3u":
 
-    # write path.
-    playlist.write(path_track + "\n")
+        # Write RUNTIME
+        audio = MP3(path_track)
+        runtime = audio.info.length
+        playlist.write(str(runtime)[0:3])
+        playlist.write("," + track + "\n")
 
-    print("entry created: " + track)
+        # write path.
+        playlist.write(path_track + "\n")
+
+        print("entry created: " + track)
 
 playlist.close()
 

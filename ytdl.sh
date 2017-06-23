@@ -187,11 +187,13 @@ case "$opt" in
             ls -lAh | awk '{$1=$2=$3=$4=$6=$7=$8=""; print $0}'
             ;;
       -p|--playlist)
-            # test for args.  if no then,
+            #if it's zero length, use ytdl-downloads by default. otherwise use user's path.
             if [ -z $2 ]; then
-                  playlist {$ME}Music/ytdl-downloads/
+                  playlist ~/Music/ytdl-downloads/
+            else
+                  playlist $2
             fi
-            playlist $2
+
             ;;
       *|-h|--help)
             display_help
