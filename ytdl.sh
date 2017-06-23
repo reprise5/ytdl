@@ -8,14 +8,13 @@
 #it assumes you have no other .m4a files in the dir.
 #Syntax: ytdl [OPTIONS] [URL]  *an option is required. Arguement isn't.
 
-#Version: 1.2.2
+#Version: 1.3.0
 #===================================================================================
-VERSION="1.2.2"   #Variable holds the version.  when updating, change it here.
+VERSION="1.3.0"   #Variable holds the version.  when updating, change it here.
 opt=$1            #first option, which should be -u, -v, or -h.
 URL=$2            #arguement to go with option1, namely -u.
 opt2=$3           #option 2, reserved only for -t at this time.
 ME=$(echo ~/)     #home directory
-ANS=""            #Is used for y/n answers for questions.
 infile=""         #filename with underscores for avconv's standard input requirement
 outfile=""        #as above, but the output name while callling avconv
 TITLE=""          #for writing ID3 tags.  user inputs, taken in with read statements.
@@ -48,8 +47,10 @@ OPTIONS:
                         SYNTAX: ytdl -u 'URL' -t or ytdl -t filename.mp3.
                         will only change tags for music in ytdl-downloads folder.
 
-      -l, --list        List the music you've already downloaded with ytdl.  Music resides
+      -ls, --list        List the music youve already downloaded with ytdl.  Music resides
                         in ~/Music/ytdl-downloads.
+      --playlist        Creates a playlist in ${ME}Music/ytdl-downloads.  if you specify
+                        a path as an arguement, a playlist will be made there instead.
 
       -h , --help       Display this help menu.
 
@@ -165,7 +166,7 @@ case "$opt" in
             #so that -u and -t can be used at the same time.
             case "$opt2" in
                   -t|--mktag)
-                         make_ID3_tags
+                        make_ID3_tags
                    ;;
             esac
             ;;
@@ -180,10 +181,19 @@ case "$opt" in
       --version)
             echo "Version: " $VERSION
             ;;
-      -l|--list)
+      -ls|--list)
             cd ~/Music/ytdl-downloads/
             echo -e "\n        >>>>>]DOWNLOADED FILES[<<<<<"
             ls -lAh | awk '{$1=$2=$3=$4=$6=$7=$8=""; print $0}'
+            ;;
+      -p|--playlist)
+            #if it's zero length, use ytdl-downloads by default. otherwise use user's path.
+            if [ -z $2 ]; then
+                  playlist ~/Music/ytdl-downloads/
+            else
+                  playlist $2
+            fi
+
             ;;
       *|-h|--help)
             display_help
