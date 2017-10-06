@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #AUTHOR: Reprise
-#DATE: 10.20.2016
+#DATE: 10.5.2017
 
 #PURPOSE:
 #This script grabs a stream off youtube, then converts it to mp3.
 #it assumes you have no other .m4a files in the dir.
 #Syntax: ytdl [OPTIONS] [URL]  *an option is required. Arguement isn't.
 
-#Version: 1.3.0
+#Version: 1.3.2
 #===================================================================================
-VERSION="1.3.0"   #Variable holds the version.  when updating, change it here.
+VERSION="1.3.2"   #Variable holds the version.  when updating, change it here.
 opt=$1            #first option, which should be -u, -v, or -h.
 URL=$2            #arguement to go with option1, namely -u.
 opt2=$3           #option 2, reserved only for -t at this time.
@@ -59,10 +59,10 @@ EOF
 
 get_stream() {
       #check Youtube-dl's existence
-      if [ -f /usr/bin/youtube-dl ]; then
+      if [[ -f /usr/local/bin/youtube-dl || -f /usr/bin/youtube-dl ]]; then
             youtube-dl --extract-audio -f 140 $URL  -o '%(title)s.%(ext)s' --no-playlist --restrict-filenames
       else
-            echo "please install youtube-dl to grab this stream."
+            echo "please install youtube-dl through python-pip to grab this stream."
             exit 1
       fi
 
@@ -71,7 +71,7 @@ get_stream() {
       if [ "$unconverted" = "" ]; then
             #Download Failed from youtube-dl.
             tput setaf 1; echo -e "[ERROR] \c"
-            tput sgr0   ; echo -e "Download failed. \nexiting early.\n"
+            tput sgr0   ; echo -e "Download failed. exiting early.\n"
             exit 1
       else
             #Youtube-dl successfully grabbed the stream.
@@ -92,7 +92,7 @@ conv_stream() {
             tput sgr0   ;
             avconv -i $infile $outfile
       else
-            echo "please install avconv to convert this stream."
+            echo "please install the package 'libav-tools' to convert this stream."
             exit 1
       fi
 }
