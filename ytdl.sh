@@ -6,11 +6,11 @@
 #PURPOSE:
 #This script grabs a stream off youtube, then converts it to mp3.
 #it assumes you have no other .m4a files in the dir.
-#Syntax: ytdl [OPTIONS] [URL]  *an option is required. Arguement isn't.
+#Syntax: ytdl [OPTIONS] [URL]  *an option is required. Argument isn't.
 
-#Version: 1.3.2
+#Version: 1.3.3
 #===================================================================================
-VERSION="1.3.2"   #Variable holds the version.  when updating, change it here.
+VERSION="1.3.3"   #Variable holds the version.  when updating, change it here.
 opt=$1            #first option, which should be -u, -v, or -h.
 URL=$2            #arguement to go with option1, namely -u.
 opt2=$3           #option 2, reserved only for -t at this time.
@@ -47,13 +47,12 @@ OPTIONS:
                         SYNTAX: ytdl -u 'URL' -t or ytdl -t filename.mp3.
                         will only change tags for music in ytdl-downloads folder.
 
-      -ls, --list        List the music youve already downloaded with ytdl.  Music resides
+      -l, --list        List the music youve already downloaded with ytdl.  Music resides
                         in ~/Music/ytdl-downloads.
       --playlist        Creates a playlist in ${ME}Music/ytdl-downloads.  if you specify
                         a path as an arguement, a playlist will be made there instead.
 
       -h , --help       Display this help menu.
-
 EOF
 }
 
@@ -98,7 +97,6 @@ conv_stream() {
 }
 
 make_ID3_tags() {
-
       if [ -f /usr/bin/eyeD3 ]; then
             cd cd ~/Music/ytdl-downloads
             tput setaf 2; echo -e "Writing Basic ID3 Tags for SONG-TITLE and ARTIST."
@@ -112,12 +110,12 @@ make_ID3_tags() {
             #implicit rename. Hard-coded extension appended to ARTIST.
             ARTIST=$(echo ${ARTIST}.mp3)
             mv $outfile "$TITLE - $ARTIST"
-       fi
+      fi
 }
 #Are you root?
 if [ "$EUID" -eq 0 ]
-  then echo "Please don't run this as root."
-  exit 0
+      then echo "Please don't run this as root."
+      exit 0
 fi
 
 #Check if ~/Music/ytdl-downloads exists.  It's the working directory.
@@ -136,17 +134,16 @@ fi
 #I don't know how to use getopts.  ;(
 
 case "$opt" in
-        -u|--url)
+      -u|--url)
             #check $URL for formatting/existence.
             if [[ $URL == *"&list="* ]]; then
-                  echo "this URL points to a playlist.  Please provide a URL to a single YouTube video."
-                  echo "This script cannot handle multi-file processing.  Exiting..."
-                  exit 0
-                  #maybe put the variable names in an array, and process them by element number, until length-1?
-                  #The future looks good.
-
+                  echo "this URL points to a playlist.  Taking current video."
+                  #Parse text & take URL up to first "&" at "&list=" which points to playlist.
+                  URL=$(echo $URL | awk 'BEGIN { FS="&" } /1/ { print $1 }')
+                  get_stream "$URL"\c
             elif [[ -n $URL ]]; then
                   get_stream "$URL"\c
+                  #echo "Stream does not contain \"&list=\"." 
             else
                   echo -e "Please enter a valid URL."
                   exit 0
@@ -181,7 +178,7 @@ case "$opt" in
       --version)
             echo "Version: " $VERSION
             ;;
-      -ls|--list)
+      -l|--list)
             cd ~/Music/ytdl-downloads/
             echo -e "\n        >>>>>]DOWNLOADED FILES[<<<<<"
             ls -lAh | awk '{$1=$2=$3=$4=$6=$7=$8=""; print $0}'
@@ -197,5 +194,9 @@ case "$opt" in
             ;;
       *|-h|--help)
             display_help
-            ;;
-esac
+            ;; # .
+esac #            \__.-'
+#                /o0 |--.--,--,--. 
+#                \_.,'Y_|T_|D_|L_'  Blob Jr.
+#                  `   """"""""" 
+

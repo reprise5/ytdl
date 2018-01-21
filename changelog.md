@@ -158,4 +158,20 @@ Initial release
 	- When installing to computers running different languages, ~/Music was not a destination for example. Maybe if non-english, put ytdl-downloads in ~ instead.
 	- with Different/newer versions of libav/ffmpeg, youtube-dl threw some errors about depricated features. (on its own, without options.) Did not throw errors from ytdl.
 
+## [1.3.3] - 2018-01-20
+
+#### Changed
+- ytdl.sh
+    - Parse $URL input to check for playlist, and take URL text up to the first "&" for current video.
+        - this option in the if/else structure now calls get_stream().
+    - changed -ls option to -l.  Updated in help text and case structure.
+    - Drew Blob Jr.
+- README
+    - reflects changes in help text
+    - chmod 775 changed to +x
+    - all instances of /bin changed to /usr/bin
+
+#### TODO
+- Dependency checks in installer script.
+- instead of avoiding youtube playlists, can you embrace it?
 
