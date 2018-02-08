@@ -34,7 +34,7 @@ cd ytdl
 ```
 next change the permissions of install.sh, and run it.
 ```
-chmod 775 install.sh
+chmod +x install.sh
 ./install.sh
 ```
 And you're done!
@@ -48,7 +48,7 @@ git clone https://github.com/reprise5/ytdl
 Move to the new directory with the downloaded files, rename ytdl.sh to ytdl, and add permissions.
 ```
 cd ytdl
-chmod 775 ytdl.sh
+chmod +x ytdl.sh
 mv ytdl.sh ytdl
 ```
 Then put a copy of the ytdl file to /usr/bin.
@@ -63,22 +63,31 @@ If you followed the previously mentioned steps for installing, simply run the sc
 ytdl has a few options:
 ```
       --version         Displays which version of ytdl this is.
+
       -u, --url [URL]   will download and convert a YouTube stream normally.
                         The output goes to ${ME}Music/ytdl-downloads.
+
       -t, --mktag       Gives you the option to write title and artist ID3 Tags.  will also rename
                         the filename with the information you give.  do not give null values.
-                        SYNTAX: ytdl -u 'URL' -t            -t must come after -u 'URL'.
+                        SYNTAX: ytdl -u 'URL' -t or ytdl -t filename.mp3.
+                        will only change tags for music in ytdl-downloads folder.
+
+      -l, --list        List the music youve already downloaded with ytdl.  Music resides
+                        in ~/Music/ytdl-downloads.
+      --playlist        Creates a playlist in ${ME}Music/ytdl-downloads.  if you specify
+                        a path as an arguement, a playlist will be made there instead.
+
       -h , --help       Display this help menu.
 ```
 
 ###### 2:
-If you don't want to put the file in /bin you can just run it as-is.
+If you don't want to put the file in /usr/bin you can just run it as-is.
 Assuming you didn't follow the installation steps for ytdl above:
 ```
 cd ~/Desktop
 git clone https://github.com/reprise5/ytdl
 cd ytdl
-chmod 775 ytdl.sh
+chmod +x ytdl.sh
 ```
 And then run the script:
 `./ytdl.sh -u 'https://www.youtube.com/ASDFGHJKL' -t

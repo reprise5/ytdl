@@ -9,7 +9,7 @@
 #root permissions are needed to write to /usr/bin.
 #This script installs ytdl v1.10+.
 
-#Version 1.3.0
+#Version 1.3.1
 #===================================================================================
 opt=$1
 case "$opt" in
