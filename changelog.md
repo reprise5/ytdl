@@ -1,6 +1,6 @@
 ```
                                   ██╗   ██╗████████╗██████╗ ██╗
-                                  ╚██╗ ██╔╝╚══██╔══╝██╔══██╗██║ 
+                                  ╚██╗ ██╔╝╚══██╔══╝██╔══██╗██║
                          █████╗    ╚████╔╝    ██║   ██║  ██║██║      █████╗
                          ╚════╝     ╚██╔╝     ██║   ██║  ██║██║      ╚════╝
                                      ██║      ██║   ██████╔╝███████╗
@@ -10,13 +10,13 @@
 `commit 6b1278349426274e1b3de709197055a818eabe3c`
 
 Initial release
-      
+
 ## [1.0.1] - 2016-04-20
 #### Changed
 - Changed the ordering of the commands for readability.
 - Changed comments
 
-#### TODO: 
+#### TODO:
 - Options, and pass URL as an arguement.
 - Split up the code so it can be called from subroutines to make it into a case structure.  for options.     
 
@@ -29,11 +29,11 @@ Initial release
 
 #### Changed
 - Separated youtube-dl & avconv calls into functions.
-  - Split up the code so it can be called from subroutines to make it into a case structure for options. 
+  - Split up the code so it can be called from subroutines to make it into a case structure for options.
 - User puts URL on the same line as the message now.  Not a new line.
   - However it is still not passed as an arguement.  Using a read statement still.
 
-#### TODO: 
+#### TODO:
 - Options, and pass URL as an arguement.
 - Make case structure for passing arguements with options.
 
@@ -42,12 +42,12 @@ Initial release
 
 #### Changed
 - Can now pass the URL as an arguement when running the script
-- Echo syntax using "" 
+- Echo syntax using ""
 #### Added
 - Make a seperate folder called "ytdl-downloads" If it doesn't exist already.  Make it the default Download location.
   - In order to go around the *.m4a issue that may arise from other people having those files in `~/Music`.
-      
-#### TODO: 
+
+#### TODO:
 - use getopts and make options to pass as well as the arguement.
     - Let format be [OPTIONS] [ARGUEMENT(S)].
     - One of these options will be mktag, which will be a new subroutine.
@@ -69,12 +69,12 @@ Initial release
 #### Changed
 - Moved the pre-avconv code in the get_stream() function.  
     - The code that looks for unconverted, cuts the extension off it, and adds underscores.
-    
+
 #### TODO:
 - Add more Options
 - Finish -k option
 - Add options that allow the user to chose converted filetype.  We'd just change how we call avconv, no big deal.  Only have to complely change how conv_stream() works.
-- Maybe have the wildcard (*) option in the case perform regular processing instead of -u.  So the user can just call ytdl [URL] with no opts. 
+- Maybe have the wildcard (*) option in the case perform regular processing instead of -u.  So the user can just call ytdl [URL] with no opts.
 
 ## [1.1.1] - 2016-09-29
 `commit 4e2364e3e5cc0b5206a5850bc740ed71b1bfe094`
@@ -106,7 +106,7 @@ Initial release
 - Looks at the URL to see if it points to a playlist on YouTube.  if it does, it tells the user
        the issue and quits itself.  
 	- YTDL cannot handle multiple .m4a files in the same dir.  this prevents this from happening by accident. the pattern is "\*&list=\*".
-      
+
 #### TODO:
 - Change installer to prompt user to install avconv, ytdl, and eyeD3 and do so as directed instead of the main ytdl script handling that.  Split the jobs.
 - Multi_stream() function to GET using "\*&list=\*" URLs, and storing the NAMES in an array. when it is time to process, it pulls the first name in the array by ELEMENT not by .m4a, and assign it to $unconverted variable.  It's literally the perfect idea.
@@ -116,7 +116,7 @@ Initial release
 
 #### Added
 - Added ability to add ID3 tags. Uses read statements and prompts for artist & title.
-	- Writing ID3 tags inplicitly renames file using the above information.	
+	- Writing ID3 tags inplicitly renames file using the above information.
 ## [1.2.2] - 2017-05-08
 
 #### Added
@@ -139,7 +139,7 @@ Initial release
 	- Skip by extension.
     - Be able to process .ogg, .flac, and .wav files as well as just .mp3.  Do this by checking the extension to determine which mutagen mod to use.
     - Do not include full path in m3u entries. if it walks into a subdir, then start tracking paths.
-      
+
 ## [1.3.1] - 2017-08-17
 `commit 3a41af76e7819976cc70bbde6c840fbe1dbb289f`
 #### Fixed
@@ -175,3 +175,20 @@ Initial release
 - Dependency checks in installer script.
 - instead of avoiding youtube playlists, can you embrace it?
 
+## [1.3.4] - 2018-02-13
+`commit 7475a2de19d14aef66e3050acc0524c7ba0cfc25`
+`commit `
+`merge `
+
+#### Fixed
+- --mktag option uses its own mktag routine instead of trying to reuse the one used post-download in  what I call "normal processing" (downloading a stream, and converting.  certain variables populate this way.)
+    - This change fixes issue #3.
+    - this new routine uses local variables for title/artist, which are taken in as args instead of read statements like in "normal processing."
+
+#### Added
+ - checks for eyeD3's existence here because it's not going through make_ID3_tags() routine anymore.
+
+#### TODO
+- rewrite make_ID3_tags to be able to receive arguments the same way --mktag does.
+- Dependency checks in installer script.
+- Detect non-english computer and install ytdl correctly.

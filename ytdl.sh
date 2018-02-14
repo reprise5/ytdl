@@ -8,9 +8,9 @@
 #it assumes you have no other .m4a files in the dir.
 #Syntax: ytdl [OPTIONS] [URL]  *an option is required. Argument isn't.
 
-#Version: 1.3.3
+#Version: 1.3.4
 #===================================================================================
-VERSION="1.3.3"   #Variable holds the version.  when updating, change it here.
+VERSION="1.3.4"   #Variable holds the version.  when updating, change it here.
 opt=$1            #first option, which should be -u, -v, or -h.
 URL=$2            #arguement to go with option1, namely -u.
 opt2=$3           #option 2, reserved only for -t at this time.
@@ -44,8 +44,8 @@ OPTIONS:
 
       -t, --mktag       Gives you the option to write title and artist ID3 Tags.  will also rename
                         the filename with the information you give.  do not give null values.
-                        SYNTAX: ytdl -u 'URL' -t or ytdl -t filename.mp3.
-                        will only change tags for music in ytdl-downloads folder.
+                        SYNTAX: ytdl -u 'URL' -t song artist
+                                ytdl -t filename.mp3 song artist
 
       -l, --list        List the music youve already downloaded with ytdl.  Music resides
                         in ~/Music/ytdl-downloads.
@@ -98,7 +98,7 @@ conv_stream() {
 
 make_ID3_tags() {
       if [ -f /usr/bin/eyeD3 ]; then
-            cd cd ~/Music/ytdl-downloads
+            cd ~/Music/ytdl-downloads
             tput setaf 2; echo -e "Writing Basic ID3 Tags for SONG-TITLE and ARTIST."
             tput sgr0   ; echo -e "TITLE:\c"
             read "TITLE"
@@ -143,7 +143,7 @@ case "$opt" in
                   get_stream "$URL"\c
             elif [[ -n $URL ]]; then
                   get_stream "$URL"\c
-                  #echo "Stream does not contain \"&list=\"." 
+                  #echo "Stream does not contain \"&list=\"."
             else
                   echo -e "Please enter a valid URL."
                   exit 0
@@ -168,12 +168,25 @@ case "$opt" in
             esac
             ;;
       -t|--mktag)
-            #this only changes tags for stuff in ytdl-downloads.
-            #Make_ID3_tags changes directories to ytdl-downloads before begining.
-            outfile=$2
-            echo "outfile is $outfile."
-            make_ID3_tags
-            echo "artist: $ARTIST , Title: $TITLE"
+            #this takes 3 args. $1 is the option --mktag.
+            input=$2
+            title=$3
+            artist=$4
+            file=`basename "$input"`
+
+            cd $(dirname "$input")
+            if [ -f /usr/bin/eyeD3 ]; then
+                  #Write the ID3 Tags out with eyeD3.
+                  eyeD3 -t $title -a $artist "$file"
+                  echo "processing \"$file\" with title $title and artist $artist in $(pwd)."
+
+                  #rename the file to reflect tags.  hard-coded extension appended to artist.
+                  artist=$(echo ${artist}.mp3)
+                  mv "$file" "$title - $artist" #rename
+                  echo "$file $title-$artist"
+            else
+                  echo "please install \"eyeD3\" through python pip."
+            fi
             ;;
       --version)
             echo "Version: " $VERSION
@@ -190,13 +203,12 @@ case "$opt" in
             else
                   playlist $2
             fi
-
             ;;
       *|-h|--help)
             display_help
             ;; # .
 esac #            \__.-'
-#                /o0 |--.--,--,--. 
+#                /o0 |--.--,--,--.
 #                \_.,'Y_|T_|D_|L_'  Blob Jr.
-#                  `   """"""""" 
+#                  `   """""""""
 
