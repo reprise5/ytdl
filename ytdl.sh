@@ -180,13 +180,10 @@ case "$opt" in
                   eyeD3 -t $title -a $artist "$file"
                   echo "processing \"$file\" with title $title and artist $artist in $(pwd)."
 
-                  #implicit rename. Hard-coded extension appended to ARTIST because
-                  #this script explicitly converts to *.mp3.
-#      FIX FILE RENAME ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
-#                 artist=$(echo ${artist}.mp3)          ←
-#                 mv '$file' '$title - $artist'         ←
-#                 echo " '$file' '$title - $artist'"    ←
-#      FIX FILE RENAME ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
+                  #rename the file to reflect tags.  hard-coded extension appended to artist.
+                  artist=$(echo ${artist}.mp3)
+                  mv "$file" "$title - $artist" #rename
+                  echo "$file $title-$artist"
             else
                   echo "please install \"eyeD3\" through python pip."
             fi
@@ -206,7 +203,6 @@ case "$opt" in
             else
                   playlist $2
             fi
-
             ;;
       *|-h|--help)
             display_help

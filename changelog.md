@@ -175,14 +175,20 @@ Initial release
 - Dependency checks in installer script.
 - instead of avoiding youtube playlists, can you embrace it?
 
-## [1.3.3] - 2018-01-20
+## [1.3.4] - 2018-02-13
+`commit 7475a2de19d14aef66e3050acc0524c7ba0cfc25`
+`commit `
+`merge `
 
-#### Changed
+#### Fixed
 - --mktag option uses its own mktag routine instead of trying to reuse the one used post-download in  what I call "normal processing" (downloading a stream, and converting.  certain variables populate this way.)
-- this new routine uses local variables for title/artist, which are taken in as args instead of read statements like in "normal processing."
+    - This change fixes issue #3.
+    - this new routine uses local variables for title/artist, which are taken in as args instead of read statements like in "normal processing."
+
+#### Added
  - checks for eyeD3's existence here because it's not going through make_ID3_tags() routine anymore.
+
 #### TODO
-- continue to fix --mktag to rename the file after tags are written.
 - rewrite make_ID3_tags to be able to receive arguments the same way --mktag does.
 - Dependency checks in installer script.
 - Detect non-english computer and install ytdl correctly.
