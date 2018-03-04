@@ -2,7 +2,7 @@
 '''
 AUTHOR: Reprise
 DATE: 05.18.17
-Version: 1.0.2
+Version: 1.0.3
 
 PURPOSE:
 This program is meant to create .m3u entries to assist in the creation of playlists.
@@ -33,8 +33,7 @@ for track in os.listdir(PATH):
     path_track = PATH + "/" + track
 
     # DATA.m3u will be in this directory, we don't want to process it.
-    if track != filename:
-
+    if track != filename and track.endswith(".mp3"):
         # Write entry as it should appear in playlist
         playlist.write(FILE_MARKER + ":")
 
@@ -51,4 +50,4 @@ for track in os.listdir(PATH):
 playlist.close()
 
 # TODO : Do not record paths from root dir. If this walks into sub-folders, start recording path from cwd.
-# TODO : Find music in recursive directories (walk), and understand their path from argv[1] Dir. 
+# TODO : Find music in recursive directories (walk), and understand their path from argv[1] Dir.
