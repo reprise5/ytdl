@@ -15,8 +15,8 @@ opt=$1            #first option, which should be -u, -v, or -h.
 URL=$2            #arguement to go with option1, namely -u.
 opt2=$3           #option 2, reserved only for -t at this time.
 ME=$(echo ~/)     #home directory
-infile=""         #filename with underscores for avconv's standard input requirement
-outfile=""        #as above, but the output name while callling avconv
+infile=""         #filename with underscores for ffmpeg's standard input requirement
+outfile=""        #as above, but the output name while callling ffmpeg
 TITLE=""          #for writing ID3 tags.  user inputs, taken in with read statements.
 ARTIST=""         #for writing ID3 tags.  user inputs, taken in with read statements.
 
@@ -27,12 +27,12 @@ Usage: $0 OPTION ['URL'][-t] or
 
   ****************************************************************************************
   *This script is intended to Grab a stream off of youtube using youtube-dl, and then    *
-  *Take that file and convert it to an mp3 using avconv.  it will delete the             *
+  *Take that file and convert it to an mp3 using ffmpeg.  it will delete the             *
   *file after it has been converted.  To update this script simply clone it from github: *
   *git clone https://github.com/reprise5/ytdl/                                           *
   *                                                                                      *
   *For information about the programs used in this script see these links:               *
-  *AVCONV:     https://libav.org/                                                        *
+  *FFMPEG:     https://www.ffmpeg.org/                                                   *
   *YOUTUBE-DL: https://github.com/rg3/youtube-dl                                         *
   ****************************************************************************************
 
@@ -86,12 +86,12 @@ get_stream() {
 }
 
 conv_stream() {
-      if [ -f /usr/bin/avconv ]; then
+      if [ -f /usr/bin/ffmpeg ]; then
             tput setaf 3; echo -e "converting to MP3...\n"
             tput sgr0   ;
-            avconv -i $infile $outfile
+            ffmpeg -i $infile $outfile
       else
-            echo "please install the package 'libav-tools' to convert this stream."
+            echo "please install the package 'ffmpeg' to convert this stream."
             exit 1
       fi
 }
